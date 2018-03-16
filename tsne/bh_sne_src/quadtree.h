@@ -16,7 +16,7 @@ static inline double min(double x, double y) { return (x <= y ? x : y); }
 static inline double max(double x, double y) { return (x <= y ? y : x); }
 
 class Cell {
-    
+
 public:
     double x;
     double y;
@@ -28,34 +28,34 @@ public:
 
 class QuadTree
 {
-    
-    // Fixed constants    
+
+    // Fixed constants
     static const int QT_NO_DIMS = 2;
     static const int QT_NODE_CAPACITY = 1;
 
     // A buffer we use when doing force computations
     double buff[QT_NO_DIMS];
-    
+
     // Properties of this node in the tree
     QuadTree* parent;
     bool is_leaf;
     int size;
     int cum_size;
-        
+
     // Axis-aligned bounding box stored as a center with half-dimensions to represent the boundaries of this quad tree
     Cell boundary;
-    
+
     // Indices in this quad tree node, corresponding center-of-mass, and list of all children
     double* data;
     double center_of_mass[QT_NO_DIMS];
     int index[QT_NODE_CAPACITY];
-    
+
     // Children
     QuadTree* northWest;
     QuadTree* northEast;
     QuadTree* southWest;
     QuadTree* southEast;
-    
+
 public:
     QuadTree(double* inp_data, int N);
     QuadTree(double* inp_data, double inp_x, double inp_y, double inp_hw, double inp_hh);
@@ -73,9 +73,9 @@ public:
     void getAllIndices(int* indices);
     int getDepth();
     void computeNonEdgeForces(int point_index, double theta, double neg_f[], double* sum_Q);
-    void computeEdgeForces(int* row_P, int* col_P, double* val_P, int N, double* pos_f);    
+    void computeEdgeForces(int* row_P, int* col_P, double* val_P, int N, double* pos_f);
     void print();
-    
+
 private:
     void init(QuadTree* inp_parent, double* inp_data, double inp_x, double inp_y, double inp_hw, double inp_hh);
     void fill(int N);
