@@ -25,7 +25,7 @@ extern "C" {
 using namespace std;
 
 // Perform t-SNE
-void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexity, double theta, unsigned int seed) {
+void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexity, unsigned int max_iter, double theta, unsigned int seed) {
     // Initalize the pseudorandom number generator
     srand(seed);
     
@@ -37,9 +37,10 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
     // Set learning parameters
     float total_time = .0;
     clock_t start, end;
-	int max_iter = 1000, stop_lying_iter = 250, mom_switch_iter = 250;
+        //int max_iter = max_iter;
+        int stop_lying_iter = 250, mom_switch_iter = 250;
 	double momentum = .5, final_momentum = .8;
-	double eta = 200.0;
+	double eta = 200.0; 
     
     // Allocate some memory
     double* dY    = (double*) malloc(N * no_dims * sizeof(double));
@@ -836,7 +837,7 @@ void TSNE::save_data(double* data, int* landmarks, double* costs, int n, int d) 
 //		double* Y = (double*) malloc(N * no_dims * sizeof(double));
 //		double* costs = (double*) calloc(N, sizeof(double));
 //        if(Y == NULL || costs == NULL) { printf("Memory allocation failed!\n"); exit(1); }
-//		tsne->run(data, N, D, Y, no_dims, perplexity, theta);
+//		tsne->run(data, N, D, Y, no_dims, perplexity, max_iter, theta);
 //		
 //		// Save the results
 //		tsne->save_data(Y, landmarks, costs, N, no_dims);
