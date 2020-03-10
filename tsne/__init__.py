@@ -5,35 +5,42 @@ import scipy.linalg as la
 import sys
 from bh_sne import BH_SNE
 
-def bh_sne(data, pca_d=None, d=2, perplexity=30., max_iter=1000, theta=0.5,
+def bh_sne(data, pca_d=None, d=2, perplexity=30., max_iter=1000,
+           stop_lying_iter=250, mom_switch_iter=250, theta=0.5,
            random_state=None, copy_data=False):
     """
     Run Barnes-Hut T-SNE on _data_.
 
-    @param data         The data.
+    @param data               The data.
 
-    @param pca_d        The dimensionality of data is reduced via PCA
-                        to this dimensionality.
+    @param pca_d              The dimensionality of data is reduced via PCA
+                              to this dimensionality.
 
-    @param d            The embedding dimensionality. Must be fixed to
-                        2.
+    @param d                  The embedding dimensionality. Must be fixed to
+                              2.
 
-    @param perplexity   The perplexity controls the effective number of
-                        neighbors.
+    @param perplexity         The perplexity controls the effective number of
+                              neighbors.
 
-    @param max_iter     Maximum number of iterations for the optimization.
-                        Should be at least 200 (default: 1000).
+    @param max_iter           Maximum number of iterations for the optimization.
+                              Should be at least 200 (default: 1000).
 
-    @param theta        If set to 0, exact t-SNE is run, which takes
-                        very long for dataset > 5000 samples.
+    @param stop_lying_iter    Iteration after which the perplexities are no
+                              longer exaggerated (default: 250)
 
-    @param random_state A numpy RandomState object; if None, use
-                        the numpy.random singleton. Init the RandomState
-                        with a fixed seed to obtain consistent results
-                        from run to run.
+    @param mom_switch_iter    Iteration after which the final momentum is
+                              used (default: 250)
 
-    @param copy_data    Copy the data to prevent it from being modified
-                        by the C code
+    @param theta              If set to 0, exact t-SNE is run, which takes
+                              very long for dataset > 5000 samples.
+
+    @param random_state       A numpy RandomState object; if None, use
+                              the numpy.random singleton. Init the RandomState
+                              with a fixed seed to obtain consistent results
+                              from run to run.
+
+    @param copy_data          Copy the data to prevent it from being modified
+                              by the C code
     """
     N, _ = data.shape
 
